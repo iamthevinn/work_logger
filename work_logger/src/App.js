@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
@@ -19,6 +18,7 @@ class App extends Component {
     this.handleMinuteChange = this.handleMinuteChange.bind(this)
     this.buttonClicked = this.buttonClicked.bind(this)
     this.minutesInHours = this.minutesInHours.bind(this)
+    this.getSumOfTime = this.getSumOfTime.bind(this)
   }
 
   handleProjectChange (event) {
@@ -41,14 +41,22 @@ class App extends Component {
     let hours = 0;
     let min = 0;
 
-    hours = parseInt(minutes / 60)
+    hours = parseInt(minutes / 60, 10)
     min = minutes % 60
-    console.log(min)
-    console.log(hours)
     if (min < 10)
       min = "0" + min
     timeInHours = hours + ":" + min
     return timeInHours
+  }
+
+  getSumOfTime (items) {
+    let totalTimeInMinutes = 0
+    console.log(items)
+    console.log(items.length)
+    for (let i = 0; i < items.length; i++) {
+      totalTimeInMinutes += parseInt(items[i].mins, 10)
+    }
+    return this.minutesInHours(totalTimeInMinutes);
   }
 
   buttonClicked (event) {
@@ -84,8 +92,6 @@ class App extends Component {
     let disableButton = true;
     if (descriptionError === null && minuteError === null)
       disableButton = false;
-
-console.log(this.state)
 
     return (
       <div style = {{height: "100vh"}}>
@@ -124,13 +130,13 @@ console.log(this.state)
               Personal
             </div>
             <div style = {{width: "50%", textAlign:"right", padding: "5px", fontSize: "24px"}}>
-            TimeInHours
+            {this.getSumOfTime(this.state.personalItems)}
           </div>
           </div>
           <div style = {{height: "240px", paddingLeft: "5px"}}>
           {this.state.personalItems.map((item, idx) => (
             <div key={idx} style = {{width: "100%", display: "flex"}}>
-              <div style={{paddingRight:"5px"}}>{this.minutesInHours(item.mins)}</div><div>{item.desc}</div>
+              <div style={{paddingRight:"5px"}}>{this.minutesInHours(item.mins)}</div><div style={{color: "red"}}>{item.desc}</div>
             </div>
 
           ))}
@@ -142,13 +148,13 @@ console.log(this.state)
               Work
             </div>
             <div style = {{width: "50%", textAlign:"right", padding: "5px", fontSize: "24px"}}>
-              TimeInHours
+            {this.getSumOfTime(this.state.workItems)}
           </div>
           </div>
           <div style = {{height: "240px", paddingLeft: "5px"}}>
           {this.state.workItems.map((item, idx) => (
             <div key={idx} style = {{width: "100%", display: "flex"}}>
-              <div style={{paddingRight:"5px"}}>{this.minutesInHours(item.mins)}</div><div>{item.desc}</div>
+              <div style={{paddingRight:"5px"}}>{this.minutesInHours(item.mins)}</div><div style={{color: "red"}}>{item.desc}</div>
             </div>
 
           ))}
@@ -159,20 +165,5 @@ console.log(this.state)
     );
   }
 }
-/*
-        <div style = {{height: "60vh", borderTop: "1px solid black", display: "flex", alignItems: "center", justifyContent: "center"}}>
-           <div style = {{height: "150px", width: "150px", border: "1px solid black", display:"inline-block", margin: "10px"}}>
-             stuff
-           </div>
-           <div style = {{height: "150px", width: "150px", border: "1px solid black", display:"inline-block", margin: "10px"}}>
-            stuff
-          </div>
-         <div style = {{height: "150px", width: "150px", border: "1px solid black", display:"inline-block", margin: "10px"}}>
-         stuff
-       </div>
-                  <div style = {{height: "150px", width: "150px", border: "1px solid black", display:"inline-block", margin: "10px"}}>
-           stuff
-         </div>
-        </div>
-*/
+
 export default App;
