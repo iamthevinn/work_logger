@@ -38,6 +38,19 @@ class App extends Component {
   buttonClicked (event) {
     event.preventDefault();
     console.log("add new item button clicked")
+    if (this.state.project === "Personal") {
+      const personalObject = {desc: this.state.description, mins: this.state.minutes}
+      let temp = this.state.personalItems;
+      temp.push(personalObject)
+      temp.sort(function(a, b){ return b.mins - a.mins })
+      this.setState({personalItems: temp})
+    } else if (this.state.project === "Work") {
+      const workObject = {desc: this.state.description, mins: this.state.minutes}
+      let temp = this.state.workItems;
+      temp.push(workObject)
+      temp.sort(function(a, b){ return b.mins - a.mins })
+      this.setState({workItems: temp})
+    }
   }
 
 
@@ -51,6 +64,8 @@ class App extends Component {
     let minuteError = null;
     if (this.state.minutes < 0 || this.state.minutes > 240)
       minuteError = "The minutes must be between 0 and 240"
+
+console.log(this.state)
 
     return (
       <div style = {{height: "100vh"}}>
@@ -89,7 +104,7 @@ class App extends Component {
               Personal
             </div>
             <div style = {{width: "50%", textAlign:"right", padding: "5px", fontSize: "24px"}}>
-              0:30
+            TimeInHours
           </div>
           </div>
           <div style = {{height: "240px", paddingLeft: "5px"}}>
@@ -104,7 +119,7 @@ class App extends Component {
               Work
             </div>
             <div style = {{width: "50%", textAlign:"right", padding: "5px", fontSize: "24px"}}>
-              4:00
+              TimeInHours
           </div>
           </div>
           <div style = {{height: "240px", paddingLeft: "5px"}}>
