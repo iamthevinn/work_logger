@@ -88,13 +88,13 @@ class App extends Component {
       minuteError = "The minutes must be between 0 and 240"
 
     let disableButton = true;
-    if (descriptionError === null && minuteError === null && this.state.minutes != "")
+    if (descriptionError === null && minuteError === null && this.state.minutes !== "")
       disableButton = false;
 
     return (
       <div style = {{height: "100vh"}}>
         <div className="header">
-          <h1>Welcome to React</h1>
+          <h1>Work Logger</h1>
         </div>
         <div style = {{height: "40vh"}}>
           <form>
