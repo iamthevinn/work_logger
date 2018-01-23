@@ -9,7 +9,7 @@ class App extends Component {
     this.state = {
       project: 'Personal',
       description: '',
-      minutes: 0,
+      minutes: -1,
       personalItems: [],
       workItems: []
     };
@@ -18,6 +18,7 @@ class App extends Component {
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
     this.handleMinuteChange = this.handleMinuteChange.bind(this)
     this.buttonClicked = this.buttonClicked.bind(this)
+    this.minutesInHours = this.minutesInHours.bind(this)
   }
 
   handleProjectChange (event) {
@@ -33,6 +34,21 @@ class App extends Component {
   handleMinuteChange (event) {
     console.log("minute changing")
     this.setState({minutes: event.target.value})
+  }
+
+  minutesInHours (minutes) {
+    let timeInHours = "";
+    let hours = 0;
+    let min = 0;
+
+    hours = parseInt(minutes / 60)
+    min = minutes % 60
+    console.log(min)
+    console.log(hours)
+    if (min < 10)
+      min = "0" + min
+    timeInHours = hours + ":" + min
+    return timeInHours
   }
 
   buttonClicked (event) {
@@ -65,6 +81,10 @@ class App extends Component {
     if (this.state.minutes < 0 || this.state.minutes > 240)
       minuteError = "The minutes must be between 0 and 240"
 
+    let disableButton = true;
+    if (descriptionError === null && minuteError === null)
+      disableButton = false;
+
 console.log(this.state)
 
     return (
@@ -93,7 +113,7 @@ console.log(this.state)
             </div>
             <br />
             <div>
-              <button onClick={this.buttonClicked} >Add</button>
+              <button disabled={disableButton} onClick={this.buttonClicked} >Add</button>
             </div>
           </form>
         </div>
@@ -108,9 +128,12 @@ console.log(this.state)
           </div>
           </div>
           <div style = {{height: "240px", paddingLeft: "5px"}}>
-            <div style = {{width: "100%", display: "flex"}}>
-              <div style={{paddingRight:"5px"}}>0:30</div><div>Learn React</div>
+          {this.state.personalItems.map((item, idx) => (
+            <div key={idx} style = {{width: "100%", display: "flex"}}>
+              <div style={{paddingRight:"5px"}}>{this.minutesInHours(item.mins)}</div><div>{item.desc}</div>
             </div>
+
+          ))}
           </div>
         </div>
         <div style = {{height: "300px", width: "300px", border: "1px solid black", display:"inline-block", margin: "10px"}}>
@@ -123,15 +146,12 @@ console.log(this.state)
           </div>
           </div>
           <div style = {{height: "240px", paddingLeft: "5px"}}>
-            <div style = {{width: "100%", display: "flex"}}>
-              <div style={{paddingRight:"5px"}}>2:30</div><div>Sprint planning</div>
+          {this.state.workItems.map((item, idx) => (
+            <div key={idx} style = {{width: "100%", display: "flex"}}>
+              <div style={{paddingRight:"5px"}}>{this.minutesInHours(item.mins)}</div><div>{item.desc}</div>
             </div>
-            <div style = {{width: "100%", display: "flex"}}>
-            <div style={{paddingRight:"5px"}}>1:30</div><div>Usability testing</div>
-          </div>
-          <div style = {{width: "100%", display: "flex"}}>
-          <div style={{paddingRight:"5px"}}>1:30</div><div>Another Line</div>
-        </div>
+
+          ))}
           </div>
         </div>
      </div>
