@@ -8,7 +8,7 @@ class App extends Component {
     this.state = {
       project: 'Personal',
       description: '',
-      minutes: -1,
+      minutes: 0,
       personalItems: [],
       workItems: []
     };
@@ -22,17 +22,17 @@ class App extends Component {
   }
 
   handleProjectChange (event) {
-    console.log("product changing")
+    //console.log("product changing")
     this.setState({project: event.target.value})
   }
 
   handleDescriptionChange (event) {
-    console.log("description changing")
+    //console.log("description changing")
     this.setState({description: event.target.value})
   }
 
   handleMinuteChange (event) {
-    console.log("minute changing")
+    //console.log("minute changing")
     this.setState({minutes: event.target.value})
   }
 
@@ -51,8 +51,6 @@ class App extends Component {
 
   getSumOfTime (items) {
     let totalTimeInMinutes = 0
-    console.log(items)
-    console.log(items.length)
     for (let i = 0; i < items.length; i++) {
       totalTimeInMinutes += parseInt(items[i].mins, 10)
     }
@@ -61,7 +59,7 @@ class App extends Component {
 
   buttonClicked (event) {
     event.preventDefault();
-    console.log("add new item button clicked")
+    //console.log("add new item button clicked")
     if (this.state.project === "Personal") {
       const personalObject = {desc: this.state.description, mins: this.state.minutes}
       let temp = this.state.personalItems;
@@ -90,7 +88,7 @@ class App extends Component {
       minuteError = "The minutes must be between 0 and 240"
 
     let disableButton = true;
-    if (descriptionError === null && minuteError === null)
+    if (descriptionError === null && minuteError === null && this.state.minutes != "")
       disableButton = false;
 
     return (
