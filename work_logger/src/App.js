@@ -2,13 +2,56 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+class App extends Component {
+  constructor(props) {
+    super(props);
 
-const Card = (props) => {
+    this.state = {
+      project: 'Personal',
+      description: '',
+      minutes: 0,
+      personalItems: [],
+      workItems: []
+    };
 
-}
+    this.handleProjectChange = this.handleProjectChange.bind(this);
+    this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
+    this.handleMinuteChange = this.handleMinuteChange.bind(this)
+    this.buttonClicked = this.buttonClicked.bind(this)
+  }
 
-const App = () => {
-  //render() {
+  handleProjectChange (event) {
+    console.log("product changing")
+    this.setState({project: event.target.value})
+  }
+
+  handleDescriptionChange (event) {
+    console.log("description changing")
+    this.setState({description: event.target.value})
+  }
+
+  handleMinuteChange (event) {
+    console.log("minute changing")
+    this.setState({minutes: event.target.value})
+  }
+
+  buttonClicked (event) {
+    event.preventDefault();
+    console.log("add new item button clicked")
+  }
+
+
+  render() {
+    let descriptionError = null
+    if (this.state.description.trim().length === 0)
+      descriptionError = "The description should not be empty"
+    else if (this.state.description.length < 5)
+      descriptionError = "The description should be at least 5 characters."
+
+    let minuteError = null;
+    if (this.state.minutes < 0 || this.state.minutes > 240)
+      minuteError = "The minutes must be between 0 and 240"
+
     return (
       <div style = {{height: "100vh"}}>
         <div className="header">
@@ -18,24 +61,24 @@ const App = () => {
           <form>
             <div>
               <label>Project </label>
-              <select>
-                <option value = "personal">Personal</option>
-                <option value = "work">Work</option>
+              <select onChange={this.handleProjectChange}>
+                <option>Personal</option>
+                <option>Work</option>
               </select>
             </div>
             <br />
             <div>
               <label>Description </label>
-              <input type="text" placeholder="At least 5 characters"></input>
+              <input onChange={this.handleDescriptionChange} type="text" placeholder="At least 5 characters"></input>{descriptionError}
             </div>
             <br />
             <div>
               <label>Minutes </label>
-              <input type="number" placeholder="Between 0 and 240"></input>
+              <input onChange={this.handleMinuteChange} type="number" placeholder="Between 0 and 240"></input>{minuteError}
             </div>
             <br />
             <div>
-              <button>Add</button>
+              <button onClick={this.buttonClicked} >Add</button>
             </div>
           </form>
         </div>
@@ -80,7 +123,7 @@ const App = () => {
       </div>
     );
   }
-//}
+}
 /*
         <div style = {{height: "60vh", borderTop: "1px solid black", display: "flex", alignItems: "center", justifyContent: "center"}}>
            <div style = {{height: "150px", width: "150px", border: "1px solid black", display:"inline-block", margin: "10px"}}>
