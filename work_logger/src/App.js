@@ -92,11 +92,11 @@ class App extends Component {
       disableButton = false;
 
     return (
-      <div style = {{height: "100vh"}}>
+      <div className="App">
         <div className="header">
           <h1>Work Logger</h1>
         </div>
-        <div style = {{height: "40vh"}}>
+        <div className="formStyle">
           <form>
             <div>
               <label>Project </label>
@@ -121,40 +121,39 @@ class App extends Component {
             </div>
           </form>
         </div>
-        <div style = {{height: "60vh", borderTop: "1px solid black", display: "flex", alignItems: "center", justifyContent: "center"}}>
-        <div style = {{height: "300px", width: "300px", border: "1px solid black", display:"inline-block", margin: "10px"}}>
-          <div style = {{height: "60px", display:"flex"}}>
-            <div style = {{width: "50%", textAlign:"left", padding: "5px", fontSize: "24px"}}>
+        <div className="bottomPane">
+        <div className="listBox">
+          <div className="topOfListBox">
+            <div className="topLeftListBox">
               Personal
             </div>
-            <div style = {{width: "50%", textAlign:"right", padding: "5px", fontSize: "24px"}}>
-            {this.getSumOfTime(this.state.personalItems)}
+            <div className="totalTime">
+              {this.getSumOfTime(this.state.personalItems)}
+            </div>
           </div>
-          </div>
-          <div style = {{height: "240px", paddingLeft: "5px"}}>
-          {this.state.personalItems.map((item, idx) => (
-            <div key={idx} style = {{width: "100%", display: "flex"}}>
-              <div style={{paddingRight:"5px"}}>{this.minutesInHours(item.mins)}</div><div style={{color: "red"}}>{item.desc}</div>
+          <div className="boxContent">
+            {this.state.personalItems.map((item, idx) => (
+            <div key={idx} className="listItem">
+              <div className="lineTime">{this.minutesInHours(item.mins)}</div><div className="lineDescription">{item.desc}</div>
             </div>
 
           ))}
           </div>
         </div>
-        <div style = {{height: "300px", width: "300px", border: "1px solid black", display:"inline-block", margin: "10px"}}>
-          <div style = {{height: "60px", display:"flex"}}>
-            <div style = {{width: "50%", textAlign:"left", padding: "5px", fontSize: "24px"}}>
+        <div className="listBox">
+          <div className="topOfListBox">
+            <div className="topLeftListBox">
               Work
             </div>
-            <div style = {{width: "50%", textAlign:"right", padding: "5px", fontSize: "24px"}}>
-            {this.getSumOfTime(this.state.workItems)}
-          </div>
-          </div>
-          <div style = {{height: "240px", paddingLeft: "5px"}}>
-          {this.state.workItems.map((item, idx) => (
-            <div key={idx} style = {{width: "100%", display: "flex"}}>
-              <div style={{paddingRight:"5px"}}>{this.minutesInHours(item.mins)}</div><div style={{color: "red"}}>{item.desc}</div>
+            <div className="totalTime">
+              {this.getSumOfTime(this.state.workItems)}
             </div>
-
+          </div>
+          <div className="boxContent">
+            {this.state.workItems.map((item, idx) => (
+              <div key={idx} className="listItem">
+              <div className="lineTime">{this.minutesInHours(item.mins)}</div><div className="lineDescription">{item.desc}</div>
+            </div>
           ))}
           </div>
         </div>
