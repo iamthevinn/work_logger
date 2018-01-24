@@ -7,7 +7,7 @@
 }
 
 .formStyle {
-  height: 30vh;
+  height: 70vh;
 }
 
 .bottomPane {
@@ -61,4 +61,8 @@
 .listItem {
   width: 100%;
   display: flex;
+}
+
+.inputElement {
+  padding-left: 10px;
 }

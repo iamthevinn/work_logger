@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import './ui-toolkit/css/nm-cx/main.css'
 
 class App extends Component {
   constructor(props) {
@@ -82,6 +83,7 @@ class App extends Component {
       descriptionError = "The description should not be empty"
     else if (this.state.description.length < 5)
       descriptionError = "The description should be at least 5 characters."
+    
 
     let minuteError = null;
     if (this.state.minutes < 0 || this.state.minutes > 240)
@@ -96,31 +98,49 @@ class App extends Component {
         <div className="header">
           <h1>Work Logger</h1>
         </div>
-        <div className="formStyle">
           <form>
-            <div>
-              <label>Project </label>
+          <div className="row">
+            <div style={{textAlign: "right"}} className="small-1 medium-1 large-1 columns">
+              <label>Project</label>
+            </div>
+            <div className="small-1 medium-2 large-1 columns">
               <select onChange={this.handleProjectChange}>
                 <option>Personal</option>
                 <option>Work</option>
               </select>
             </div>
-            <br />
-            <div>
-              <label>Description </label>
-              <input onChange={this.handleDescriptionChange} type="text" placeholder="At least 5 characters"></input>{descriptionError}
+            <div className="small-1 medium-9 large-1 columns">
             </div>
-            <br />
-            <div>
+          </div>
+          <div className="row">
+            <div className="small-1 medium-1 large-1 columns">
+              <label>Description</label>
+            </div>
+            <div className="small-1 medium-3 large-1 columns" >
+              <input onChange={this.handleDescriptionChange} type="text" placeholder="At least 5 characters"></input>
+            </div>
+            <div className="small-1 medium-8 large-1 columns">
+              {descriptionError ? <label style={{margin: '10px'}} class="label small alert">{descriptionError}</label> : null}
+            </div>
+          </div>
+          <div className="row">
+            <div className="small-1 medium-1 large-1 columns">
               <label>Minutes </label>
-              <input onChange={this.handleMinuteChange} type="number" placeholder="Between 0 and 240"></input>{minuteError}
             </div>
-            <br />
-            <div>
-              <button disabled={disableButton} onClick={this.buttonClicked} >Add</button>
+            <div className="small-1 medium-2 large-1 columns">
+              <input onChange={this.handleMinuteChange} type="number" placeholder="0-240"></input>
             </div>
+            <div className="small-1 medium-9 large-1 columns">
+              {minuteError ? <label style={{margin: '10px'}} class="label small alert">{minuteError}</label> : null}
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="small-1 medium-12 large-1 columns">
+              <button disabled={disableButton} onClick={this.buttonClicked}>Add</button>
+            </div>
+          </div>
           </form>
-        </div>
         <div className="bottomPane">
         <div className="listBox">
           <div className="topOfListBox">
