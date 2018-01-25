@@ -9,7 +9,7 @@ class App extends Component {
     this.state = {
       project: 'Personal',
       description: '',
-      minutes: 0,
+      minutes: '',
       personalItems: [],
       workItems: []
     };
@@ -95,89 +95,122 @@ class App extends Component {
 
     return (
       <div className="App">
+
+
+
         <div className="header">
           <h1>Work Logger</h1>
         </div>
           <form>
-          <div className="row">
-            <div style={{textAlign: "right"}} className="small-1 medium-1 large-1 columns">
-              <label>Project</label>
+            <div className="row">
+              <div className="small-1 medium-1 large-1 columns alignRight">
+                <label>Project</label>
+              </div>
+              <div className="small-1 medium-2 large-2 columns">
+                <select onChange={this.handleProjectChange}>
+                  <option>Personal</option>
+                  <option>Work</option>
+                </select>
+              </div>
+              <div className="small-1 medium-9 large-9 columns">
+              </div>
             </div>
-            <div className="small-1 medium-2 large-1 columns">
-              <select onChange={this.handleProjectChange}>
-                <option>Personal</option>
-                <option>Work</option>
-              </select>
+            <div className="row">
+              <div className="small-1 medium-1 large-1 columns alignRight">
+                <label>Description</label>
+              </div>
+              <div className="small-1 medium-3 large-3 columns" >
+                <input onChange={this.handleDescriptionChange} type="text" placeholder="At least 5 characters"></input>
+              </div>
+              <div className="small-1 medium-8 large-8 columns">
+                {descriptionError ? <label className="label small alert errorMargin">{descriptionError}</label> : null}
+              </div>
             </div>
-            <div className="small-1 medium-9 large-1 columns">
+            <div className="row">
+              <div className="small-1 medium-1 large-1 columns alignRight">
+                <label>Minutes</label>
+              </div>
+              <div className="small-1 medium-2 large-2 columns">
+                <input onChange={this.handleMinuteChange} type="number" placeholder="0-240"></input>
+              </div>
+              <div className="small-1 medium-9 large-9 columns">
+                {minuteError ? <label className="label small alert errorMargin">{minuteError}</label> : null}
+              </div>
             </div>
-          </div>
-          <div className="row">
-            <div className="small-1 medium-1 large-1 columns">
-              <label>Description</label>
-            </div>
-            <div className="small-1 medium-3 large-1 columns" >
-              <input onChange={this.handleDescriptionChange} type="text" placeholder="At least 5 characters"></input>
-            </div>
-            <div className="small-1 medium-8 large-1 columns">
-              {descriptionError ? <label style={{margin: '10px'}} class="label small alert">{descriptionError}</label> : null}
-            </div>
-          </div>
-          <div className="row">
-            <div className="small-1 medium-1 large-1 columns">
-              <label>Minutes </label>
-            </div>
-            <div className="small-1 medium-2 large-1 columns">
-              <input onChange={this.handleMinuteChange} type="number" placeholder="0-240"></input>
-            </div>
-            <div className="small-1 medium-9 large-1 columns">
-              {minuteError ? <label style={{margin: '10px'}} class="label small alert">{minuteError}</label> : null}
-            </div>
-          </div>
 
-          <div className="row">
-            <div className="small-1 medium-12 large-1 columns">
-              <button disabled={disableButton} onClick={this.buttonClicked}>Add</button>
+            <div className="row">
+              <div className="small-1 medium-1 large-1 columns">
+              </div>
+              <div className="small-1 medium-11 large-11 columns">
+                <button disabled={disableButton} onClick={this.buttonClicked}>Add</button>
+              </div>
             </div>
-          </div>
           </form>
-        <div className="bottomPane">
-        <div className="listBox">
-          <div className="topOfListBox">
-            <div className="topLeftListBox">
-              Personal
-            </div>
-            <div className="totalTime">
-              {this.getSumOfTime(this.state.personalItems)}
-            </div>
-          </div>
-          <div className="boxContent">
-            {this.state.personalItems.map((item, idx) => (
-            <div key={idx} className="listItem">
-              <div className="lineTime">{this.minutesInHours(item.mins)}</div><div className="lineDescription">{item.desc}</div>
-            </div>
 
-          ))}
+        <div className="row bottomPane">
+          <br />
+          <div className="small-1 medium-1 large-1 columns">&nbsp;
+          </div>
+          <div className="small-4 medium-4 large-4 columns"> 
+            <div className="card">
+              <div className="row">
+                <div className="small-6 medium-6 large-6 columns">
+                  <div>Personal</div>
+                </div>
+                <div className="small-6 medium-6 large-6 columns alignRight">
+                  <div>{this.getSumOfTime(this.state.personalItems)}</div>
+                </div>
+              </div>
+
+              {this.state.personalItems.map((item, idx) => (
+
+              <div key={idx} className="row">
+                <div className="small-2 medium-2 large-2 columns">
+                  <div>{this.minutesInHours(item.mins)}</div>
+                </div>
+                <div className="small-10 medium-10 large-10 columns">
+                  <div className='lineDescription'>{item.desc}</div>
+                </div>
+              </div>
+
+              ))}
+
+            </div>
+          </div>
+
+          <div className="small-2 medium-2 large-2 columns"> &nbsp;
+          </div>
+
+          <div className="small-4 medium-4 large-4 columns"> 
+            <div className="card">
+              <div className="row">
+                <div className="small-6 medium-6 large-6 columns">
+                  <div>Work</div>
+                </div>
+                <div className="small-6 medium-6 large-6 columns alignRight">
+                  <div>{this.getSumOfTime(this.state.workItems)}</div>
+                </div>
+              </div>
+
+              {this.state.workItems.map((item, idx) => (
+
+              <div key={idx} className="row">
+                <div className="small-2 medium-2 large-2 columns">
+                  <div>{this.minutesInHours(item.mins)}</div>
+                </div>
+                <div className="small-10 medium-10 large-10 columns">
+                  <div className='lineDescription'>{item.desc}</div>
+                </div>
+              </div>
+
+              ))}
+              
+            </div>
+          </div>
+
+          <div className="small-1 medium-1 large-1 columns"> &nbsp;
           </div>
         </div>
-        <div className="listBox">
-          <div className="topOfListBox">
-            <div className="topLeftListBox">
-              Work
-            </div>
-            <div className="totalTime">
-              {this.getSumOfTime(this.state.workItems)}
-            </div>
-          </div>
-          <div className="boxContent">
-            {this.state.workItems.map((item, idx) => (
-              <div key={idx} className="listItem">
-              <div className="lineTime">{this.minutesInHours(item.mins)}</div><div className="lineDescription">{item.desc}</div>
-            </div>
-          ))}
-          </div>
-        </div>
-     </div>
       </div>
     );
   }
