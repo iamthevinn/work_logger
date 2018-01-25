@@ -95,9 +95,6 @@ class App extends Component {
 
     return (
       <div className="App">
-
-
-
         <div className="header">
           <h1>Work Logger</h1>
         </div>
